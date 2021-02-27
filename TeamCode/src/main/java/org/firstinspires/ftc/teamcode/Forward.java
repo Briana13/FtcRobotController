@@ -27,99 +27,84 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.LightSensor;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
- * This file illustrates the concept of driving a path based on time.
+ * This file illustrates the concept of driving up to a line and then stopping.
  * It uses the common Pushbot hardware class to define the drive on the robot.
  * The code is structured as a LinearOpMode
  *
- * The code assumes that you do NOT have encoders on the wheels,
- *   otherwise you would use: PushbotAutoDriveByEncoder;
+ * The code shows using two different light sensors:
+ *   The Primary sensor shown in this code is a legacy NXT Light sensor (called "sensor_light")
+ *   Alternative "commented out" code uses a MR Optical Distance Sensor (called "sensor_ods")
+ *   instead of the LEGO sensor.  Chose to use one sensor or the other.
  *
- *   The desired path in this example is:
- *   - Drive forward for 3 seconds
- *   - Spin right for 1.3 seconds
- *   - Drive Backwards for 1 Second
- *   - Stop and close the claw.
- *
- *  The code is written in a simple form with no optimizations.
- *  However, there are several ways that this type of sequence could be streamlined,
+ *   Setting the correct WHITE_THRESHOLD value is key to stopping correctly.
+ *   This should be set half way between the light and dark values.
+ *   These values can be read on the screen once the OpMode has been INIT, but before it is STARTED.
+ *   Move the senso on asnd off the white line and not the min and max readings.
+ *   Edit this code to make WHITE_THRESHOLD half way between the min and max.
  *
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
-@Disabled
-public class PushbotAutoDriveByTime_Linear extends LinearOpMode {
+@Autonomous
+//PushbotAutoDriveToLine_Linear
+public class Forward extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+    HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+    LightSensor             lightSensor;      // Primary LEGO Light sensor,
+    // OpticalDistanceSensor   lightSensor;   // Alternative MR ODS sensor
 
 
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
 
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
+        /* Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+
+        // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
+        // robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+        // Abort this loop is started or stopped.
+        while (!(isStarted() || isStopRequested())) { }
 
-        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Drive forward for 3 seconds
-        robot.leftDrive.setPower(FORWARD_SPEED);
-        robot.rightDrive.setPower(FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+        // Drive forward
+        robot.leftRear.setPower(.5);
+        robot.rightRear.setPower(.5);
+        robot.leftFront.setPower(.5);
+        robot.rightFront.setPower(.5);
+        sleep(3500);
             telemetry.update();
-        }
 
-        // Step 2:  Spin right for 1.3 seconds
-        robot.leftDrive.setPower(TURN_SPEED);
-        robot.rightDrive.setPower(-TURN_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
 
-        // Step 3:  Drive Backwards for 1 Second
-        robot.leftDrive.setPower(-FORWARD_SPEED);
-        robot.rightDrive.setPower(-FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
-            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
 
-        // Step 4:  Stop and close the claw.
-        robot.leftDrive.setPower(0);
-        robot.rightDrive.setPower(0);
-        robot.leftClaw.setPosition(1.0);
-        robot.rightClaw.setPosition(0.0);
+        // Stop all motors
+        // Stop all motors
 
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-        sleep(1000);
+        // Stop all motors
+        robot.leftRear.setPower(0);
+        robot.rightRear.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightFront.setPower(0);
     }
 }

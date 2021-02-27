@@ -47,12 +47,12 @@ public class DriveButSpeed extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested()) {
-            intake.setPower(-.7);
+            intake.setPower(-.8);
             flyWheel.setVelocity(1570);
-            if (this.gamepad1.dpad_up){
+            if (this.gamepad1.dpad_down){
                 Coco.setPower(0.8);
             }
-            else if (this.gamepad1.dpad_down){
+            else if (this.gamepad1.dpad_up){
                 Coco.setPower(-0.8);
             }
             else {
