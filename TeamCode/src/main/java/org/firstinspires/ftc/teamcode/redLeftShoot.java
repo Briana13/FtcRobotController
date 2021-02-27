@@ -30,9 +30,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.LightSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
@@ -57,13 +56,11 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 @Autonomous
 //PushbotAutoDriveToLine_Linear
-public class sLpark extends LinearOpMode {
+public class redLeftShoot extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
-    LightSensor             lightSensor;      // Primary LEGO Light sensor,
-    // OpticalDistanceSensor   lightSensor;   // Alternative MR ODS sensor
-
+    private Servo Carlitos;
 
 
     @Override
@@ -73,6 +70,7 @@ public class sLpark extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+        Carlitos = hardwareMap.get(Servo.class, "Carlitos");
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -88,22 +86,50 @@ public class sLpark extends LinearOpMode {
         while (!(isStarted() || isStopRequested())) { }
 
 
-        // Strafe left
-        robot.leftRear.setPower(.5);
-        robot.rightRear.setPower(-.5);
-        robot.leftFront.setPower(-.5);
-        robot.rightFront.setPower(.5);
-        sleep(1500);
-
-        // go forward
+        // Drive forward
         robot.leftRear.setPower(.5);
         robot.rightRear.setPower(.5);
         robot.leftFront.setPower(.5);
         robot.rightFront.setPower(.5);
-        sleep(3800);
+        sleep(2300);
 
+        //strafe rigth
+        robot.leftRear.setPower(-.5);
+        robot.rightRear.setPower(.5);
+        robot.leftFront.setPower(.5);
+        robot.rightFront.setPower(-.5);
+        sleep(1000);
+
+        //shoot two rings
+        Carlitos.setPosition(.5);
+        sleep(500);
+        Carlitos.setPosition(0);
+        sleep(500);
+        Carlitos.setPosition(.5);
+        sleep(500);
+        Carlitos.setPosition(0);
+
+
+        // Drive forward
+        robot.leftRear.setPower(.5);
+        robot.rightRear.setPower(.5);
+        robot.leftFront.setPower(.5);
+        robot.rightFront.setPower(.5);
+        sleep(1200);
+
+        //strafe left
+        robot.leftRear.setPower(.5);
+        robot.rightRear.setPower(-.5);
+        robot.leftFront.setPower(-.5);
+        robot.rightFront.setPower(.5);
+        sleep(2800);
+
+
+
+
+        // Stop all motors
+        // Stop all motors
         telemetry.update();
-
         // Stop all motors
         robot.leftRear.setPower(0);
         robot.rightRear.setPower(0);

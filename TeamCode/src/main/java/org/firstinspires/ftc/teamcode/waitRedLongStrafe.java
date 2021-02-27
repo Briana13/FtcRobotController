@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 @Autonomous
 //PushbotAutoDriveToLine_Linear
-public class waitSLpark extends LinearOpMode {
+public class waitRedLongStrafe extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
