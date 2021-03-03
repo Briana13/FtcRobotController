@@ -31,6 +31,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
@@ -61,7 +63,7 @@ public class redLeftShoot extends LinearOpMode {
     /* Declare OpMode members. */
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     private Servo Carlitos;
-
+    private DcMotorEx flyWheel = null;
 
     @Override
     public void runOpMode() {
@@ -71,7 +73,8 @@ public class redLeftShoot extends LinearOpMode {
          */
         robot.init(hardwareMap);
         Carlitos = hardwareMap.get(Servo.class, "Carlitos");
-
+        flyWheel = hardwareMap.get(DcMotorEx.class,"flyWheel");
+        flyWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -83,7 +86,9 @@ public class redLeftShoot extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         // Abort this loop is started or stopped.
-        while (!(isStarted() || isStopRequested())) { }
+        while (!(isStarted() || isStopRequested())) {
+            flyWheel.setPower(1570);
+        }
 
 
         // Drive forward

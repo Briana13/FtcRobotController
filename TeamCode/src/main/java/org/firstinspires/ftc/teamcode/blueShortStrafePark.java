@@ -31,6 +31,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.LightSensor;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
@@ -60,8 +62,7 @@ public class blueShortStrafePark extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
-    LightSensor             lightSensor;      // Primary LEGO Light sensor,
-    // OpticalDistanceSensor   lightSensor;   // Alternative MR ODS sensor
+     // Alternative MR ODS sensor
 
 
 
@@ -84,7 +85,9 @@ public class blueShortStrafePark extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         // Abort this loop is started or stopped.
-        while (!(isStarted() || isStopRequested())) { }
+        while (!(isStarted() || isStopRequested())) {
+
+        }
 
 
         // Strafe left

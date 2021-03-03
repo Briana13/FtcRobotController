@@ -27,15 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import com.qualcomm.robotcore.hardware.LightSensor;
 
 /**
  * This file illustrates the concept of driving up to a line and then stopping.
@@ -56,14 +53,18 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous
-//PushbotAutoDriveToLine_Linear
-public class waitBlueLeftShoot extends LinearOpMode {
+
+@Autonomous(name="Pushbot: Auto Drive To Line", group="Pushbot")
+@Disabled
+public class PushbotAutoDriveToLine_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
-    private Servo Carlitos;
-    private DcMotorEx flyWheel = null;
+    HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+    LightSensor             lightSensor;      // Primary LEGO Light sensor,
+    // OpticalDistanceSensor   lightSensor;   // Alternative MR ODS sensor
+
+    static final double     WHITE_THRESHOLD = 0.2;  // spans between 0.1 - 0.5 from dark to light
+    static final double     APPROACH_SPEED  = 0.5;
 
     @Override
     public void runOpMode() {
@@ -72,13 +73,17 @@ public class waitBlueLeftShoot extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        Carlitos = hardwareMap.get(Servo.class, "Carlitos");
-        flyWheel = hardwareMap.get(DcMotorEx.class,"flyWheel");
-        flyWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        // get a reference to our Light Sensor object.
+        lightSensor = hardwareMap.lightSensor.get("sensor_light");                // Primary LEGO Light Sensor
+        //  lightSensor = hardwareMap.opticalDistanceSensor.get("sensor_ods");  // Alternative MR ODS sensor.
+
+        // turn on LED of light sensor.
+        lightSensor.enableLed(true);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
@@ -87,61 +92,27 @@ public class waitBlueLeftShoot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         // Abort this loop is started or stopped.
         while (!(isStarted() || isStopRequested())) {
-            flyWheel.setPower(1570);
+
+            // Display the light level while we are waiting to start
+            telemetry.addData("Light Level", lightSensor.getLightDetected());
+            telemetry.update();
+            idle();
         }
 
+        // Start the robot moving forward, and then begin looking for a white line.
+        robot.leftDrive.setPower(APPROACH_SPEED);
+        robot.rightDrive.setPower(APPROACH_SPEED);
 
-        //wait 10 seconds
-        sleep(10000);
+        // run until the white line is seen OR the driver presses STOP;
+        while (opModeIsActive() && (lightSensor.getLightDetected() < WHITE_THRESHOLD)) {
 
-        // Drive forward
-        robot.leftRear.setPower(.5);
-        robot.rightRear.setPower(.5);
-        robot.leftFront.setPower(.5);
-        robot.rightFront.setPower(.5);
-        sleep(2300);
-
-        //strafe Rigth
-        robot.leftRear.setPower(-.5);
-        robot.rightRear.setPower(.5);
-        robot.leftFront.setPower(.5);
-        robot.rightFront.setPower(-.5);
-        sleep(1000);
-
-        //shoot two rings
-        Carlitos.setPosition(.5);
-        sleep(500);
-        Carlitos.setPosition(0);
-        sleep(500);
-        Carlitos.setPosition(.5);
-        sleep(500);
-        Carlitos.setPosition(0);
-
-
-        // Drive forward
-        robot.leftRear.setPower(.5);
-        robot.rightRear.setPower(.5);
-        robot.leftFront.setPower(.5);
-        robot.rightFront.setPower(.5);
-        sleep(1200);
-
-        //strafe Rigth
-        robot.leftRear.setPower(-.5);
-        robot.rightRear.setPower(.5);
-        robot.leftFront.setPower(.5);
-        robot.rightFront.setPower(-.5);
-        sleep(2800);
-
-
-
+            // Display the light level while we are looking for the line
+            telemetry.addData("Light Level",  lightSensor.getLightDetected());
+            telemetry.update();
+        }
 
         // Stop all motors
-        // Stop all motors
-        telemetry.update();
-        // Stop all motors
-        robot.leftRear.setPower(0);
-        robot.rightRear.setPower(0);
-        robot.leftFront.setPower(0);
-        robot.rightFront.setPower(0);
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setPower(0);
     }
 }
