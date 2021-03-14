@@ -58,7 +58,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 @Autonomous
 //PushbotAutoDriveToLine_Linear
-public class redRightShoot extends LinearOpMode {
+public class bluePs extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
@@ -78,7 +78,7 @@ public class redRightShoot extends LinearOpMode {
         Carlitos = hardwareMap.get(Servo.class, "Carlitos");
         flyWheel = hardwareMap.get(DcMotorEx.class,"flyWheel");
         flyWheel.setDirection(DcMotorSimple.Direction.REVERSE);
-        Achlys.setPosition(1);
+
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -91,7 +91,8 @@ public class redRightShoot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         // Abort this loop is started or stopped.
         while (!(isStarted() || isStopRequested())) {
-            flyWheel.setVelocity(1200);
+            flyWheel.setVelocity(1550);
+
         }
 
 
@@ -100,14 +101,14 @@ public class redRightShoot extends LinearOpMode {
         robot.rightRear.setPower(.5);
         robot.leftFront.setPower(.5);
         robot.rightFront.setPower(.5);
-        sleep(1800);
+        sleep(2350);
 
         //strafe left
-        robot.leftRear.setPower(.5);
-        robot.rightRear.setPower(-.5);
-        robot.leftFront.setPower(-.5);
-        robot.rightFront.setPower(.5);
-        sleep(750);
+        robot.leftRear.setPower(-.5);
+        robot.rightRear.setPower(.5);
+        robot.leftFront.setPower(.5);
+        robot.rightFront.setPower(-.5);
+        sleep(300);
 
         robot.leftRear.setPower(0);
         robot.rightRear.setPower(0);
@@ -119,6 +120,19 @@ public class redRightShoot extends LinearOpMode {
         sleep(500);
         Carlitos.setPosition(0);
         sleep(1000);
+
+// strafe left
+        robot.leftRear.setPower(-.5);
+        robot.rightRear.setPower(.5);
+        robot.leftFront.setPower(.5);
+        robot.rightFront.setPower(-.5);
+        sleep(200);
+
+        robot.leftRear.setPower(0);
+        robot.rightRear.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightFront.setPower(0);
+
         Carlitos.setPosition(.5);
         sleep(500);
         Carlitos.setPosition(0);
@@ -128,19 +142,19 @@ public class redRightShoot extends LinearOpMode {
         // Drive forward
 
 
-        //strafe left
-        robot.leftRear.setPower(-.5);
-        robot.rightRear.setPower(.5);
-        robot.leftFront.setPower(.5);
-        robot.rightFront.setPower(-.5);
-        sleep(1200);
+        //strafe rigth
+        //robot.leftRear.setPower(-.5);
+        //robot.rightRear.setPower(.5);
+        //robot.leftFront.setPower(.5);
+        //robot.rightFront.setPower(-.5);
+        //sleep(1200);
 
 
         robot.leftRear.setPower(.5);
         robot.rightRear.setPower(.5);
         robot.leftFront.setPower(.5);
         robot.rightFront.setPower(.5);
-        sleep(1250);
+        sleep(1350);
 
         // Stop all motors
         // Stop all motors

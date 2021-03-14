@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -21,12 +22,13 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class DriveButSpeed extends LinearOpMode {
 
 
-    private DcMotor intake;
-    private DcMotorEx flyWheel = null;
-    private Servo Carlitos;
-    private Servo Achlys;
-    private Servo Purple;
-    private DcMotor Coco;
+
+        private DcMotor intake;
+        private DcMotorEx flyWheel = null;
+        private Servo Carlitos;
+        private Servo Achlys;
+        private Servo Purple;
+        private DcMotor Coco;
 
     public void runOpMode() throws InterruptedException {
         intake = hardwareMap.get(DcMotor.class, "intake");
@@ -45,10 +47,14 @@ public class DriveButSpeed extends LinearOpMode {
         Coco.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
-
         while (!isStopRequested()) {
-            intake.setPower(-.8);
-            flyWheel.setVelocity(1570);
+            flyWheel.setVelocity(1560);
+            if (this.gamepad1.dpad_right){
+                intake.setPower(.8);
+            }
+            else if (!this.gamepad1.dpad_right){
+                intake.setPower(-.8);
+            }
             if (this.gamepad1.dpad_down){
                 Coco.setPower(0.8);
             }
@@ -93,4 +99,6 @@ public class DriveButSpeed extends LinearOpMode {
             telemetry.update();
         }
     }
+
+
 }
