@@ -114,7 +114,7 @@ public class redPs extends LinearOpMode {
         robot.rightRear.setPower(0);
         robot.leftFront.setPower(0);
         robot.rightFront.setPower(0);
-        sleep(1000);
+        sleep(2000);
 
         //shoot two rings
         Carlitos.setPosition(.5);
