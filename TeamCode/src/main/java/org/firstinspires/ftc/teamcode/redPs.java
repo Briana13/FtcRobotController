@@ -91,7 +91,7 @@ public class redPs extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         // Abort this loop is started or stopped.
         while (!(isStarted() || isStopRequested())) {
-            flyWheel.setVelocity(1450);
+            flyWheel.setVelocity(1500);
 
         }
 
@@ -101,7 +101,7 @@ public class redPs extends LinearOpMode {
         robot.rightRear.setPower(.5);
         robot.leftFront.setPower(.5);
         robot.rightFront.setPower(.5);
-        sleep(2250);
+        sleep(2450);
 
         //strafe left
         robot.leftRear.setPower(.5);
@@ -114,12 +114,27 @@ public class redPs extends LinearOpMode {
         robot.rightRear.setPower(0);
         robot.leftFront.setPower(0);
         robot.rightFront.setPower(0);
+        sleep(1000);
 
         //shoot two rings
         Carlitos.setPosition(.5);
         sleep(500);
         Carlitos.setPosition(0);
         sleep(1000);
+
+        //strafe right
+        robot.leftRear.setPower(-.5);
+        robot.rightRear.setPower(.5);
+        robot.leftFront.setPower(.5);
+        robot.rightFront.setPower(-.5);
+        sleep(800);
+
+        robot.leftRear.setPower(0);
+        robot.rightRear.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightFront.setPower(0);
+        sleep(1000);
+
         Carlitos.setPosition(.5);
         sleep(500);
         Carlitos.setPosition(0);
