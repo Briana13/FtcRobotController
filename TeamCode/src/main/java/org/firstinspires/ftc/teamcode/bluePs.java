@@ -63,7 +63,7 @@ public class bluePs extends LinearOpMode {
     /* Declare OpMode members. */
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     DriveButSpeed phone = new DriveButSpeed();
-    private Servo Carlitos;
+    private Servo Krystal;
     private DcMotorEx flyWheel = null;
     private Servo Achlys;
 
@@ -75,9 +75,9 @@ public class bluePs extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
-        Carlitos = hardwareMap.get(Servo.class, "Carlitos");
+        Krystal = hardwareMap.get(Servo.class, "Carlitos");
         flyWheel = hardwareMap.get(DcMotorEx.class,"flyWheel");
-        flyWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+        
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -116,9 +116,9 @@ public class bluePs extends LinearOpMode {
         robot.rightFront.setPower(0);
 
         //shoot two rings
-        Carlitos.setPosition(.5);
+        Krystal.setPosition(.5);
         sleep(500);
-        Carlitos.setPosition(0);
+        Krystal.setPosition(0);
         sleep(1000);
 
 // strafe left
@@ -133,9 +133,9 @@ public class bluePs extends LinearOpMode {
         robot.leftFront.setPower(0);
         robot.rightFront.setPower(0);
 
-        Carlitos.setPosition(.5);
+        Krystal.setPosition(.5);
         sleep(500);
-        Carlitos.setPosition(0);
+        Krystal.setPosition(0);
         sleep(500);
 
 

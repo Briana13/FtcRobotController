@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -25,25 +24,25 @@ public class DriveButSpeed extends LinearOpMode {
 
         private DcMotor intake;
         private DcMotorEx flyWheel = null;
-        private Servo Carlitos;
+        private Servo Krystal;
         private Servo Achlys;
-        private Servo Purple;
+
         private DcMotor Coco;
 
     public void runOpMode() throws InterruptedException {
         intake = hardwareMap.get(DcMotor.class, "intake");
         flyWheel = hardwareMap.get(DcMotorEx.class,"flyWheel");
-        flyWheel.setDirection(DcMotorSimple.Direction.REVERSE);
-        Carlitos = hardwareMap.get(Servo.class, "Carlitos");
+
+        Krystal = hardwareMap.get(Servo.class, "Krystal");
         Achlys = hardwareMap.get(Servo.class,"Achlys");
-        Purple = hardwareMap.get(Servo.class,"Purple");
+
         Coco = hardwareMap.get(DcMotor.class, "Coco");
 
-        flyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         Coco.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
@@ -65,10 +64,10 @@ public class DriveButSpeed extends LinearOpMode {
                Coco.setPower(0);
             }
             if (this.gamepad1.b){
-                Carlitos.setPosition(.5);
+                Krystal.setPosition(.5);
             }
             if (this.gamepad1.a){
-                Carlitos.setPosition(0);
+                Krystal.setPosition(0);
             }
             if (this.gamepad1.left_bumper){
                 Achlys.setPosition(.4);
@@ -76,12 +75,7 @@ public class DriveButSpeed extends LinearOpMode {
             if (this.gamepad1.right_bumper){
                 Achlys.setPosition(1);
             }
-            if (this.gamepad1.x){
-                Purple.setPosition(1);
-            }
-            if (this.gamepad1.y){
-                Purple.setPosition(.6);
-            }
+
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,
